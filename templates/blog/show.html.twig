@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
-{% block title %} {{ parent() }} {{ product.name }}{% endblock %}
-{% block h1Title %}{{ product.name }}{% endblock %}
+{% block title %} {{ parent() }} {{ post.name }}{% endblock %}
+{% block h1Title %}{{ post.name }}{% endblock %}
 {% block main %}
 <table class="table">
     <tbody>
     <tr>
         <th>Id</th>
-        <td>{{ product.id }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.price }}</td>
+        <td>{{ post.id }}</td>
+        <td>{{ post.name }}</td>
+        <td>{{ post.price }}</td>
     </tr>
     </tbody>
 </table>
-    {% for tag in product.tags %}
+    {% for tag in post.tags %}
         {{ tag.name }}<br/>
 
     {% endfor %}

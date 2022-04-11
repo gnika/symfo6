@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ProductRepository;
+use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: ProductRepository::class)]
-class Product
+#[ORM\Entity(repositoryClass: PostRepository::class)]
+class Post
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,7 +30,7 @@ class Product
     #[ORM\Column(type: 'float')]
     private $price;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'Posts')]
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 
@@ -43,7 +43,7 @@ class Product
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $imageFile;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'Products')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'Posts')]
     private $tags;
 
     public function __construct()
@@ -140,7 +140,7 @@ class Product
     {
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
-            $tag->addProduct($this);
+            $tag->addPost($this);
         }
 
         return $this;
@@ -149,7 +149,7 @@ class Product
     public function removeTag(Tag $tag): self
     {
         if ($this->tags->removeElement($tag)) {
-            $tag->removeProduct($this);
+            $tag->removePost($this);
         }
 
         return $this;

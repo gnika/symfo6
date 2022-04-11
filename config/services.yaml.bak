@@ -29,6 +29,8 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    mailer:
+         class: App/Service/NewMailer
 
     App\Service\FileUploader:
         arguments:

@@ -18,12 +18,12 @@ class Tag
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'tags')]
-    private $Products;
+    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'tags')]
+    private $Posts;
 
     public function __construct()
     {
-        $this->Products = new ArrayCollection();
+        $this->Posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -44,25 +44,25 @@ class Tag
     }
 
     /**
-     * @return Collection|Product[]
+     * @return Collection|Post[]
      */
-    public function getProducts(): Collection
+    public function getPosts(): Collection
     {
-        return $this->Products;
+        return $this->Posts;
     }
 
-    public function addProduct(Product $product): self
+    public function addPost(Post $post): self
     {
-        if (!$this->Products->contains($product)) {
-            $this->Products[] = $product;
+        if (!$this->Posts->contains($post)) {
+            $this->Posts[] = $post;
         }
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function removePost(Post $post): self
     {
-        $this->Products->removeElement($product);
+        $this->Posts->removeElement($post);
 
         return $this;
     }

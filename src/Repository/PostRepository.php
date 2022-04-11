@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\Product;
+use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Product|null find($id, $lockMode = null, $lockVersion = null)
- * @method Product|null findOneBy(array $criteria, array $orderBy = null)
- * @method Product[]    findAll()
- * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Post|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Post|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Post[]    findAll()
+ * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductRepository extends ServiceEntityRepository
+class PostRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Product::class);
+        parent::__construct($registry, Post::class);
     }
 
     public function findAllGreaterThanPrice(float $price): array
@@ -24,7 +24,7 @@ class ProductRepository extends ServiceEntityRepository
         $em = $this->getEntityManager();
         $query = $em->createQuery(
             'SELECT p
-                FROM App\Entity\Product p
+                FROM App\Entity\Post p
                 WHERE p.price > :price
                 ORDER BY p.price ASC
         ')->setParameter('price',$price);
@@ -33,7 +33,7 @@ class ProductRepository extends ServiceEntityRepository
 
 
     // /**
-    //  * @return Product[] Returns an array of Product objects
+    //  * @return Post[] Returns an array of Post objects
     //  */
     /*
     public function findByExampleField($value)
@@ -50,7 +50,7 @@ class ProductRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Product
+    public function findOneBySomeField($value): ?Post
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

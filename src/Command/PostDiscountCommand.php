@@ -1,7 +1,7 @@
 <?php
 namespace App\Command;
 use App\Repository\CategoryRepository;
-use App\Repository\ProductRepository;
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -10,23 +10,23 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-class ProductDiscountCommand extends Command
+class PostDiscountCommand extends Command
 {
-    protected static $defaultName = 'product:discount';
+    protected static $defaultName = 'post:discount';
     protected static $defaultDescription = 'Set a discount to our
-products';
+posts';
     /** @var EntityManagerInterface */
     private $entityManager;
-    /** @var ProductRepository */
-    private $productRepository;
+    /** @var PostRepository */
+    private $postRepository;
     /** @var CategoryRepository */
     private $categoryRepository;
     public function __construct(EntityManagerInterface $entityManager,
-                                ProductRepository $productRepository,
+                                PostRepository $postRepository,
                                 CategoryRepository $categoryRepository)
     {
         $this->entityManager = $entityManager;
-        $this->productRepository = $productRepository;
+        $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;
         parent::__construct();
     }
@@ -36,7 +36,7 @@ products';
             ->addArgument('percent', InputArgument::OPTIONAL,
                 'discount percentage', 10)
             ->addOption('category', 'c',
-                InputOption::VALUE_REQUIRED, 'product\s category name')
+                InputOption::VALUE_REQUIRED, 'post\s category name')
         ;
     }
     protected function execute(InputInterface $input,
@@ -47,20 +47,20 @@ products';
         if ($category_name = $input->getOption('category')) {
             $category = $this->categoryRepository->findOneBy(['name'
             => $category_name]);
-            $products = $category->getProducts();
+            $posts = $category->getPosts();
         }else{
-            $products = $this->productRepository->findAll();
+            $posts = $this->postRepository->findAll();
 
         }
 
-        if($products->isEmpty()){
-            $io->caution('There\'s no products here');
+        if($posts->isEmpty()){
+            $io->caution('There\'s no posts here');
             return Command::INVALID;
         }
-        foreach ($products as $product) {
-            $product->setPrice($product->getPrice() -
-                $product->getPrice() * $percent / 100);
-            $this->entityManager->persist($product);
+        foreach ($posts as $post) {
+            $post->setPrice($post->getPrice() -
+                $post->getPrice() * $percent / 100);
+            $this->entityManager->persist($post);
         }
         $this->entityManager->flush();
         $io->success('Discounts persisted : '.$percent.'%');

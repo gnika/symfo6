@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Entity\Product;
+use App\Entity\Post;
 use App\Entity\Tag;
-use App\Form\ProductType;
+use App\Form\PostType;
 use App\Form\TagType;
-use App\Repository\ProductRepository;
+use App\Repository\PostRepository;
 use App\Service\FileUploader;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -24,9 +24,9 @@ use Symfony\Component\Translation\TranslatableMessage;
 use function Symfony\Component\Translation\t;
 
 /**
-* @Route("/product")
+* @Route("/blog")
 */
-class ProductController extends AbstractController
+class BlogController extends AbstractController
 {
 
     private $em;
@@ -38,18 +38,19 @@ class ProductController extends AbstractController
 
   /**
 	* @Route("/{id}",
-	name="product_show",
+	name="post_show",
 	methods={"GET"},
 	requirements={"id"="\d+"})
 	*/
 	public function show( Request $request, int $id=6): Response
 	{
         $id_request = $request->get('id');
-        $product    = $this->em->getRepository(Product::class);
-        $theProduct = $product->find($id);
+        $post    = $this->em->getRepository(Post::class);
+        $thePost = $post->find($id);
+		
 
-        return $this->render('product/show.html.twig', [
-            'product' => $theProduct,
+        return $this->render('blog/show.html.twig', [
+            'post' => $thePost,
         ]);
 
 
@@ -73,27 +74,27 @@ class ProductController extends AbstractController
 	name="listing",
 	methods={"GET"})
 	*/
-	public function products( Request $request): Response
+	public function posts( Request $request): Response
 	{
 
-        $product    = $this->em->getRepository(Product::class);
-        $products = $product->findAll();
+        $post    = $this->em->getRepository(Post::class);
+        $posts	 = $post->findAll();
 
-        return $this->render('product/products.html.twig', [
-            'products' => $products,
+        return $this->render('blog/posts.html.twig', [
+            'posts' => $posts,
         ]);
 	}
 
     /**
-     * @Route("/new", name="product_new", methods={"GET","POST"})
+     * @Route("/new", name="post_new", methods={"GET","POST"})
      */
     public function new(Request $request, FileUploader $fileUploader): Response
     {
         //dd(t('help.app_description', [], 'messages+intl'));
 
         //dd($request);
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
 
 
         $form->handleRequest($request);
@@ -103,12 +104,12 @@ class ProductController extends AbstractController
             $brochureFile = $form->get('imageFile')->getData();
             if ($brochureFile) {
                 $brochureFileName = $fileUploader->upload($brochureFile);
-                $product->setImageFile($brochureFileName);
+                $post->setImageFile($brochureFileName);
             }
 
             $entityManager = $this->em->getManager();
 
-            $entityManager->persist($product);
+            $entityManager->persist($post);
 
             $entityManager->flush();
 
@@ -120,8 +121,8 @@ class ProductController extends AbstractController
 
         }
 
-        return $this->render('product/new.html.twig', [
-            'product' => $product,
+        return $this->render('blog/new.html.twig', [
+            'post' => $post,
             'form' => $form->createView(),
         ]);
     }
@@ -149,33 +150,33 @@ class ProductController extends AbstractController
 
         }
 
-        return $this->render('product/new_tag.html.twig', [
+        return $this->render('blog/new_tag.html.twig', [
             'tag' => $tag,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="product_edit",
+     * @Route("/{id}/edit", name="post_edit",
     methods={"GET","POST"})
      */
-    public function edit(Request $request, Product $product, FileUploader $fileUploader):Response
+    public function edit(Request $request, Post $post, FileUploader $fileUploader):Response
     {
 
-        if( $product->getImageFile() != '' )
-            $product->setImageFile(new File($this->getParameter('brochures_directory').'/'.$product->getImageFile()));
-
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            /** @var UploadedFile $brochureFile */
-            $brochureFile = $form->get('imageFile')->getData();
-            if ($brochureFile) {
-                $brochureFileName = $fileUploader->upload($brochureFile);
-                $product->setImageFile($brochureFileName);
-            }
+			
+			dd($post);
+			if($form->get('imageFile')->getData() != null){
+				/** @var UploadedFile $brochureFile */
+				$brochureFile = $form->get('imageFile')->getData();
+				if ($brochureFile) {
+					$brochureFileName = $fileUploader->upload($brochureFile);
+					$post->setImageFile($brochureFileName);
+				}
+			}
             $this->em->getManager()->flush();
 
 
@@ -188,20 +189,23 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('listing');
         }
 
-        return $this->render('product/edit.html.twig', [
-            'product' => $product,
+		if( $post->getImageFile() != '' )
+            $post->setImageFile(new File($this->getParameter('brochures_directory').'/'.$post->getImageFile()));
+		
+        return $this->render('blog/edit.html.twig', [
+            'post' => $post,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="product_delete", methods={"POST"})
+     * @Route("/{id}", name="post_delete", methods={"POST"})
      */
-    public function delete(Request $request, Product $product):
+    public function delete(Request $request, Post $post):
     Response
     {
         $entityManager = $this->em->getManager();
-        $entityManager->remove($product);
+        $entityManager->remove($post);
         $entityManager->flush();
 
         $this->addFlash(
