@@ -1,0 +1,31 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+    
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+
+app_lucky_number:
+    path: /lucky/number
+    controller: App\Controller\LuckyController::number
+
+homepage:
+    path: /{_locale}
+    requirements:
+        _locale: '%app_locales%'
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    defaults:
+        template: default/homepage.html.twig
+        _locale: '%locale%'
+
+app_logout:
+    path: /logout
+    methods: GET
+
+admin:
+    resource: 'routes/admin.yaml'
+    prefix:   /{_locale}
+    requirements:
+        _locale: '%app_locales%'

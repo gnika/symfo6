@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edit Product{% endblock %}
+{% block main %}
+    <h1>Edit Product</h1>
+    {% if product.imageFile is not null %}
+    media du product :
+
+    <p><img src="{{ asset("#{product.imageFile}") }}" width="100px" class="img-rounded"/></p>
+        <br/>
+    {% endif %}
+    {{ include('product/_form.html.twig') }}
+
+    <a href="{{ path('listing') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ parent() }} {{ product.name }}{% endblock %}
+{% block h1Title %}{{ product.name }}{% endblock %}
+{% block main %}
+<table class="table">
+    <tbody>
+    <tr>
+        <th>Id</th>
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+    </tr>
+    </tbody>
+</table>
+    {% for tag in product.tags %}
+        {{ tag.name }}<br/>
+
+    {% endfor %}
+
+    <a href="{{ path('listing') }}">back to list</a>
+{% endblock %}
+
