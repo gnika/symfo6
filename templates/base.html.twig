@@ -8,7 +8,7 @@ See https://symfony.com/doc/current/templates.html#template-inheritance-and-layo
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>{% block title %}Symfony Demo application{% endblock %}</title>
+    <title>{% block title %}web parser{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
@@ -23,8 +23,8 @@ See https://symfony.com/doc/current/templates.html#template-inheritance-and-layo
         <div class="navbar navbar-default navbar-static-top" role="navigation">
             <div class="container">
                 <div class="navbar-header col-md-3 col-lg-2">
-                    <a class="navbar-brand" href="">
-                        Symfony Demo
+                    <a class="navbar-brand" href="/">
+                        WEB PARSER
                     </a>
 
                     <button type="button" class="navbar-toggle"
@@ -41,7 +41,7 @@ See https://symfony.com/doc/current/templates.html#template-inheritance-and-layo
 
                         {% block header_navigation_links %}
                             <li>
-                                <a href="">
+                                <a href="{{ path('homepage')}}">
                                     <i class="fa fa-home" aria-hidden="true"></i> {{ 'menu.homepage'|trans }}
                                 </a>
                             </li>

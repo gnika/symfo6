@@ -24,6 +24,12 @@ Class AppExtension extends AbstractExtension
         ];
     }
 
+    public function getFilters() {
+        return array(
+            'json_decode'   => new \Twig\TwigFilter('json_decode','json_decode'),
+        );
+    }
+
     public function getLocales()
     {
         $this->_locales = [];
@@ -37,6 +43,10 @@ Class AppExtension extends AbstractExtension
 
         return $this->_locales;
 
+    }
+
+    public function json_decode($str) {
+        return json_decode($str);
     }
 
 

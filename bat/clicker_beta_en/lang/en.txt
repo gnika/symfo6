@@ -1,0 +1,237 @@
+CLICKER
+clicker1.com
+Edit
+Edit selected operation through the capturing window
+Edit manually selected operation
+File
+New
+Open
+Save as
+Run CLICKER
+Run CLICKER and minimize
+Quit
+Settings
+Help
+The codes and combinations of keys
+About CLICKER - splash screen
+About the author
+clicker1.com
+Remove the selected operation
+Clear list
+Move all the coordinates
+Move selected operation up
+Move selected operation down
+add action
+duplicate selected
+start
+To stop press: 
+Error. Wrong file format.
+End!
+Load data into the CLICKER!
+Problem with process!
+Cycle
+Operation
+of
+random: omitted
+alternately: omitted
+Waiting
+ms.
+RAND
+CLICKER starts ...
+stop
+Wrong values of time range!
+No defined operations!
+label
+skip, move, singleClick, doubleClick, rightClick, selectAreaByLeftButton, selectAreaByRightButton
+mouse position - x
+mouse position - y
+mouse position - x2 - for selectAreaByLeftButton, selectAreaByRightButton
+mouse position - y2 - for selectAreaByLeftButton, selectAreaByRightButton
+waiting time after the operation (range from)
+key codes, which has automated call
+path to an external program
+cyclical, alternately, randomly, onetime
+sound from /sounds/ directory, e.g. notify.wav
+cancel
+save
+Editing operations
+Do not remove the parameters, change only their values.
+close window
+The codes and combinations of keys
+The following text comes from the Microsoft Visual Studio 2005 documentation.
+quit
+restore the focus
+save operation
+Enter the correct data!
+choose
+The operation added to the list!
+The operation parameters:
+label:
+Label
+Mouse
+Type of call
+Keyboard
+Sounds
+Processes
+Pause
+The operations label
+Select the type of mouse click:
+If you check the option 'select the area', you must indicate the second point. If you are not using capturing masks (see in options), click 'restore focus' button and indicate the second point by capturing key.
+skip
+single-click
+double-click
+click the right mouse button
+select area by the left mouse button
+select area by the left mouse button
+select area by the right mouse button
+select area by the right mouse button
+The operation in subsequent cycles can be execute periodically, alternately, randomly or only onece in first cycle. When the operation is alternately invoking - for the first time it starts.
+cyclically
+alternately
+randomly
+It is possible to simulate the keyboard keys. The list of codes you'll see by clicking on a question mark.
+For example: {h}{t}{t}{p}{:}{/}{/}{c}{l}{i}{c}{k}{e}{r}{1}{.}{c}{o}{m}
+Add brackets
+Remove brackets
+combinations of keys:
+Each operation may be preceded by the sound.
+The operation can run an external application
+Pre-defined processes:
+browse
+Set the time, followed by another operation.
+wait after the operation:
+milliseconds
+Set the mouse in the appropriate position and click the left mouse button or press the capturing key
+You are using the capturing mask
+Set the mouse in the appropriate position and press the capturing key
+Language
+select language:
+Set the time interval between successive cycles
+from:
+to:
+milliseconds (1/1000 sec.)
+Time settings
+cycles count:
+duration of CLICKER running:
+min.
+automatic start at:
+automatic restart at:
+turn off your computer at:
+reboot the computer at:
+timeout for the next keys:
+default time between operations:
+This option allows you to stop the CLICKER at the time when the window is inactive or minimized. To stop the CLICKER press: {key}. When activated option, you must restart the program.
+Information
+Mistakenly filled form
+Restart program to see changes.
+Enter the correct capturing key!
+The default time between operations should be > 0!
+Timeout for the keys should be > 10!
+Time 'from' should be less or equal time 'to'! Both times larger > 0!
+minimize to tray
+capturing key:
+minimize program at start-up ("start" button)
+show system exceptions in the status window
+interaction when no focus (global hook) - to stop Clicker press: 
+use the capturing mask
+transparency of masks:
+play at the end:
+General settings
+Startup
+Reminder
+Parameters for the subsequent cycles 
+action:
+sound:
+open URL:
+notice text:
+display notification at:
+minimize program
+script file:
+run CLICKER after loading the script:
+path for downloaded files:
+cancel
+at the X axis:
+at the Y-axis:
+convert coordinates
+Move the coordinates
+Only {limit} defined operations is avaliable in this version of the program. Provide a small grant to get PRO version. More info: clicker1.com
+Random value - range from:
+edit selected
+waiting time after the operation (range to)
+move
+default time between single mouse events, ie. MOUSEKEYDOWN and MOUSEKEYUP
+default timeout (in milliseconds) for the HttpWebRequest
+Get Clicker Pro Version (without limitation)
+Help center
+You are using Clicker Free version contains some limitations. Get the latest Clicker Pro.
+Get Clicker Pro
+Auction portals
+Select website:
+Query url:
+Search phrase:
+Get pages:
+Price from:
+to:
+Notification:
+Clicker - popup notifier
+clear list
+hide all and close
+(clear all include hidden elements)
+wait between pages from
+Wait before read next page of auctions
+Reading auctions list
+hidden elements:
+Variables included in the curly brackets are automatically replaced. You don't need to change them. Url address can be modified with additional parameters specific for selected website.
+In some cases You can define here the user-id.
+No auctions found.
+Buy now
+Auction
+No.
+WEBSITE
+PHOTO
+TITLE
+PRICE
+INFO
+YOU ARE BLOCKED / RESET YOUR IP OR TRY TO UNBLOCK
+BLOCKED
+UNBLOCK
+No new auction found or is not defined search action.
+E-mail settings
+SMS settings
+Integration with smsapi.com / smsapi.pl:
+Url address (from api):
+Login:
+Password:
+send sample sms message
+Username:
+send sample e-mail message
+SMTP address:
+Port:
+E-mail address:
+Enable SSL:
+Mobile (e.g. 48500500500):
+Sample message
+Message from Clicker app
+Message was sent
+wait ...
+Subject:
+Message (full html code support):
+Login / e-mail: 
+Lines:
+Message:
+only one time
+action skipped
+default mouse action:
+Resume
+start from action:
+default action edit type:
+Keyboard shortcuts
+Run:
+Run and minimize:
+Quit:
+Resume:
+Stop CLICKER:
+To stop press: 
+Shortcuts with "global hook" activated option required:
+Shortcuts with active window require:
+Check for updates

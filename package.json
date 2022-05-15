@@ -28,6 +28,9 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "node-sass": "^7.0.1"
+        "jquery-ui": "^1.13.1",
+        "node-sass": "^7.0.1",
+        "sass": "^1.51.0",
+        "webpack-jquery-ui": "^2.0.1"
     }
 }

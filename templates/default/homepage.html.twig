@@ -17,14 +17,26 @@
     <div class="row">
         <div class="col-sm-6">
             <div class="jumbotron">
-                <p>
-                    {{ 'help.browse_app'|trans|raw }}
-                </p>
-                <p>
-                    <a class="btn btn-primary btn-lg" href="{{ path('listing') }}">
-                        <i class="fa fa-users" aria-hidden="true"></i> {{ 'action.browse_app'|trans }}
-                    </a>
-                </p>
+                {% if app.user %}
+                    <p>
+                        {{ 'help.connected'|trans|raw }}
+                    </p>
+                    <p>
+                        <a class="btn btn-primary btn-lg" href="{{ path('listingSite') }}">
+                            <i class="fa fa-lock" aria-hidden="true"></i> {{ 'help.connectedButton'|trans }}
+                        </a>
+                    </p>
+                {% else %}
+                    <p>
+                        {{ 'help.browse_app'|trans|raw }}
+                    </p>
+                    <p>
+                        <a class="btn btn-primary btn-lg" href="{{ path('login') }}">
+                            <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.browse_app'|trans }}
+                        </a>
+                    </p>
+                {% endif %}
+
             </div>
         </div>
 
@@ -34,8 +46,8 @@
                     {{ 'help.browse_admin'|trans|raw }}
                 </p>
                 <p>
-                    <a class="btn btn-primary btn-lg" href="">
-                        <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.browse_admin'|trans }}
+                    <a class="btn btn-primary btn-lg" href="{{ path('listingSiteexample') }}">
+                        <i class="fa fa-users" aria-hidden="true"></i> {{ 'action.browse_admin'|trans }}
                     </a>
                 </p>
             </div>

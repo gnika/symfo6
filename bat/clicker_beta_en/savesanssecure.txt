@@ -1,0 +1,1 @@
+<etykieta>label_1</etykieta><mysz>singleClick</mysz><xmouse>1274</xmouse><ymouse>489</ymouse><xmouse2>0</xmouse2><ymouse2>0</ymouse2><czekaj_od_milisekund>10000</czekaj_od_milisekund><czekaj_do_milisekund>10000</czekaj_do_milisekund><ciag_klawiszy></ciag_klawiszy><uruchom_proces></uruchom_proces><rodzaj_uruchomienia>cyclical</rodzaj_uruchomienia><dzwiek></dzwiek>

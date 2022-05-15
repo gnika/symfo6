@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ categorie.site.name }} {% endblock %}
+
+{% block h1Title %} {{ categorie.site.name }} / {{ categorie.name }} {{ 'test.h1'|trans|raw }} {% endblock %}
+{% block body %}
+
+    <a href="{{ path('listingSiteexample')}}">{{ 'categ.retour'|trans|raw }}</a>
+
+    <h2>{{ 'site.search'|trans|raw }} <i class="fa fa-minus"></i> <i class="fa fa-plus"></i></h2>
+    {{ form(form, { attr: {novalidate: 'novalidate'} }) }}
+    {%  if donnees is not empty  %}
+
+                {# sorting of properties based on query components #}
+                <div{% if pagination.isSorted('datePublication') %} class="sorted"{% endif %}>
+                    Trier par {{ knp_pagination_sortable(pagination, 'Date de publication', 'datePublication') }}
+                </div>
+
+
+
+        {# total items count #}
+        <div class="count">
+            <h2>{{ pagination.getTotalItemCount }} offres</h2>
+        </div>
+        <div class="alert alert-success">
+            <h2>PRIX MOYEN DE LA RECHERCHE : {{ donneesPrix }} €</h2>
+        </div>
+
+            {% for article in pagination %}
+
+            <article class="post">
+                <h2>
+                    <a target="_blank" href="https://www.leboncoin.fr/voitures/{{ article.urlOffre }}">
+                        {{ article.titre }}
+                    </a>
+                </h2>
+
+
+                <p class="post-metadata">
+                    <a href="#"
+                       class="label label-warning"
+                    >
+                    <span class="metadata"><i title="prix" class="fa fa-usd"> {{ article.prix }}€</i></span>
+                    </a>
+                    <a href="#"
+                           class="label label-success"
+                        >
+                        <span class="metadata"><i title="Date de circulation" class="fa fa-calendar"> {{ article.dateCirculation|date("d/m/Y") }}</i></span>
+                    </a>
+                    <a href="#"
+                            class="label label-success"
+                    >
+                        <span class="metadata"><i title="Marque (modele - année)" class="fa fa-cogs  "> {{ article.marque }} ( {{ article.modele }} - {{ article.anneeModele }} )</i></span>
+                    </a>
+                    <a href="#"
+                               class="label label-success"
+                            ><span class="metadata"><i title="Kilometrage" class="fa fa-dot-circle-o"> {{ article.kilometrage }} km</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Carburant" class="fa fa-flask"> {{ article.carburant }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Boite de vitesse" class="fa fa-cogs"> {{ article.boiteVitesse }}</i></span>
+                    </a>
+                    <a href="#"
+                                   class="label label-info"
+                                > <span class="metadata"><i title="Région" class="fa fa-map-marker"> {{ article.region }}</i></span>
+                    </a>
+                    <a href="#"
+                                   class="label label-info"
+                                > <span class="metadata"><i title="Département" class="fa fa-map-marker"> {{ article.departement }}</i></span>
+                    </a>
+                    <a href="#"
+                                   class="label label-info"
+                                > <span class="metadata"><i title="Ville" class="fa fa-map-marker"> {{ article.ville }}</i></span>
+                    </a>
+<br/>
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Type de véhicule" class="fa fa-caravan"> {{ article.vehiculeType }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Couleur" class="fa fa-paint-brush"> {{ article.couleur }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Nombre de place" class="fa fa-user-o"> {{ article.places }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Nombre de porte" class="fa fa-unlock"> {{ article.portes }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Carburant" class="fa fa-flask"> {{ article.carburant }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Puissance din" class="fa fa-superpowers"> {{ article.puissanceDin }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Puissance fiscale" class="fa fa-bolt"> {{ article.puissanceFiscale }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Puissance DIN" class="fa fa-bomb"> {{ article.puissanceDin }}</i></span>
+                    </a>
+
+                    <a href="#"
+                       {% if  article.permis is  null  %}class="label label-default"{% else %}class="label label-success"{% endif %}
+                                > <span class="metadata"><i title="Avec permis" class="fa fa-id-card-o">{% if article.permis == 0 %} Non{% else %} Oui{% endif %}</i></span>
+                    </a>
+
+                    <a href="#"
+                       {% if  article.piecesDetachees == 0 or article.piecesDetachees =="Non renseignée" or article.piecesDetachees is  null  %}class="label label-default"{% else %}class="label label-success"{% endif %}
+                                > <span class="metadata"><i title="Disponibilité des pièces détachées" class="fa fa-wrench"> {{ article.piecesDetachees }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   {% if  article.loalld == 0 or article.loalld is  null  %}class="label label-default"{% else %}class="label label-success"{% endif %}
+                                > <span class="metadata"><i title="Soumis à LOA/LLD" class="fa fa-envelope-open-o"> {{ article.loalld }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   {% if  article.telephone == 1 or  article.telephone == 0 or  article.telephone == -1 or article.telephone is  null  or article.telephone == -1 %}class="label label-default"{% else %}class="label label-red"{% endif %}
+                                > <span class="metadata"><i title="Téléphone" class="fa fa-phone"> {% if  article.telephone == 1 or  article.telephone == -1 or  article.telephone == 0 or article.telephone is  null %} {% else %}{{ article.telephone }}{% endif %}</i></span>
+                    </a>
+
+
+                    <span class="metadata"><i title="Publication de l'annonce" class="fa fa-calendar"> {{ article.datePublication|date("d/m/Y") }}</i></span>
+                    <span class="metadata"><i title="Date de récupération de l'annonce" class="fa fa-calendar"> {{ article.createdAt|date("d/m/Y") }}</i></span>
+
+                </p>
+                {% set images = article.images | json_decode %}
+                {% for image in images %}
+                    <img class="imgHover" width="50px" src="{{ image }}" />
+                {% endfor %}
+                <p class="descriptionArticle"><span>{{ article.description|slice(0, 50) ~ '...' }}</span></p>
+                <div class="pop-up">
+                    <p>
+                        {{ article.description}}
+                    </p>
+
+                </div>
+
+            </article>
+                {% endfor %}
+
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        no records found
+    {% endif %}
+{% endblock %}

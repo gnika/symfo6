@@ -1,0 +1,237 @@
+KLIKACZ
+clicker1.com
+Edycja
+Edytuj wybraną operację poprzez okno przechwytywania
+Edytuj ręcznie wybraną operację
+Plik
+Nowy
+Otwórz
+Zapisz jako
+Uruchom automat
+Uruchom automat i zminimalizuj
+Zakończ działanie programu
+Ustawienia
+Pomoc
+Kody i kombinacje klawiszy
+O programie - splash screen
+O autorze
+clicker1.com
+Usuń wybraną operację
+Czyść listę
+Przesuń wszystkie współrzędne
+Przesuń wybraną operację do góry
+Przesuń wybraną operację w dół
+dodaj akcję
+zdubluj zaznaczoną
+start
+Zatrzymanie: 
+Błąd. Zły format pliku.
+Koniec!
+Załaduj dane do automatu!
+Problem przy wywołaniu procesu!
+Cykl
+Operacja
+z
+losowo: pominięta
+naprzemian: pominięta
+Czekam
+ms.
+RAND
+AUTOMAT startuje ...
+stop
+Błędne wartości w przedziale czasowym!
+Brak zdefiniowanych operacji!
+etykieta
+skip, move, singleClick, doubleClick, rightClick, selectAreaByLeftButton, selectAreaByRightButton
+pozycja myszy - współrzędna x
+pozycja myszy - współrzędna y
+pozycja myszy - współrzędna x2 wykorzystywana przy: selectAreaByLeftButton, selectAreaByRightButton
+pozycja myszy - współrzędna y2 wykorzystywana przy: selectAreaByLeftButton, selectAreaByRightButton
+czas oczekiwania po wykonaniu operacji (zakres od)
+kody klawiszy, które ma wywołać automat
+ścieżka do zewnętrznego programu
+cyclical, alternately, randomly, onetime
+dźwięk z katalogu /sounds/ np. notify.wav
+anuluj zmiany
+zapisz zmiany
+Edycja operacji
+Nie usuwaj parametrów, zmieniaj tylko ich wartości.
+zamknij okno
+Kody i kombinacje klawiszy
+Poniższy tekst pochodzi z dokumentacji Microsoft Visual Studio 2005.
+zakończ
+przywróć fokus
+zapisz operację
+Wprowadź poprawne dane!
+brak
+Operacja dodana do listy!
+Parametry operacji:
+etykieta:
+Etykieta
+Mysz
+Parametry uruchomienia
+Klawiatura
+Dźwięki
+Procesy
+Przerwa
+Etykieta operacji
+Wybór rodzaju kliknięcia myszą.
+Jeśli zaznaczysz opcję 'zaznaczenie obszaru' musisz wskazać drugi punkt. Jeśli nie używasz maski (zobacz w opcjach) kliknij na przycisk 'przywróć focus' i wskaż drugi punkt za pomocą klawisza przechwytywania.
+pomiń
+pojedyńcze kliknięcie
+podwójne kliknięcie
+kliknięcie prawym klawiszem myszy
+zaznaczenie obszaru lewym klawiszem myszy
+zaznaczenie obszaru poprzez lewy klawisz myszy
+zaznaczenie obszaru prawym klawiszem myszy
+zaznaczenie obszaru poprzez prawy klawisz myszy
+Operację w kolejnych cyklach można uruchamiać cyklicznie, naprzemian, losowo lub tylko raz w pierwszym cyklu. Gdy operacja jest określona jako naprzemienna - za pierwszym razem jest uruchamiana.
+cyklicznie
+naprzemian
+losowo
+Możliwe jest symulowanie przycisków klawiatury. Listę kodów zobaczysz klikając w znak zapytania. 
+Np.: {h}{t}{t}{p}{:}{/}{/}{c}{l}{i}{c}{k}{e}{r}{1}{.}{c}{o}{m}
+dodaj nawiasy
+usuń nawiasy
+kombinacje klawiszy:
+Każda operacja może zostać poprzedzona dźwiękiem.
+Operacja może uruchomić zewnętrzny program
+procesy predefiniowane:
+przeglądaj
+Ustaw czas, po którym nastąpi kolejna operacja.
+po wykonaniu operacji zaczekaj:
+milisekund
+Ustaw mysz w odpowiedniej pozycji tam gdzie ma nastąpić akcja i kliknij lewym klawiszem myszy lub naciśnij klawisz przechwytywania
+Do przechwytywania używasz maski
+Ustaw mysz w odpowiedniej pozycji tam gdzie ma nastąpić akcja i naciśnij klawisz przechwytywania
+Język
+wybierz język:
+Okreś przedział czasowy pomiędzy kolejnymi cyklami
+od:
+do:
+milisekund (1/1000 sek.)
+Funkcje czasu
+ilość cykli:
+czas działania automatu:
+min.
+uruchom automat o godzinie:
+restartuj automat co:
+wyłącz komputer o godzinie:
+zrestartuj komputer o godzinie:
+timeout dla kolejnych klawiszy:
+domyślny czas pomiędzy operacjami:
+Opcja umożliwia zatrzymanie klikacza w momencie gdy jego okno jest nieaktywne lub zminimalizowane. Zatrzymanie programu: {key}. Po uaktywnieniu opcji należy zrestartować program.
+Informacja
+Błędnie wypełniony formularz
+Aby zmiany były widoczne, uruchom ponownie aplikację.
+Wprowadź poprawny klawisz przechwytywania!
+Domyślny czas między operacjami powinien być > 0!
+Timeout dla klawiszy powinien być > 10!
+Czas 'od' powinien być mniejszy bądź równy czasu 'do'! Oba czasy większe > 0!
+minimalizuj do traya
+klawisz przechwytywania:
+minimalizuj po uruchomieniu automatu (przycisk start)
+pokazuj wyjątki systemowe w okienku statusu
+interakcja przy braku fokusa (global hook) - zatrzymanie programu: 
+używaj maski do przechwytywania
+przezroczystość maski:
+graj na koniec:
+Ogólne
+Ustawienia startowe
+Przypominacz
+Parametry dla kolejnych cykli
+akcja:
+dźwięk:
+otwórz adres URL:
+tekst powiadomienia:
+wyświetl powiadomienie:
+zminimalizuj klikacza
+plik skryptu:
+uruchom automat po wczytaniu skryptu:
+folder dla pobieranych plików:
+anuluj
+na osi X:
+na osi Y:
+przelicz współrzędne
+Przesuń współrzędne
+W tej wersji programu dozwolone jest definiowanie do {limit} operacji włącznie. Przekaż niewielką dotację i otrzymaj wersję PRO. Więcej informacji: clicker1.com
+Wartość losowa z przedziału od:
+edytuj zaznaczoną
+czas oczekiwania po wykonaniu operacji (zakres do)
+przesuń
+domyślny czas pomiędzy pojedynczymi zdarzeniami myszy tj. MOUSEKEYDOWN i MOUSEKEYUP
+domyślny timeout (czas oczekiwania w milisek.) dla żądania HttpWebRequest
+Pobierz wersję Clicker Pro (bez ograniczeń)
+Centrum pomocy
+Używasz wersji Clicker Free zawierającej pewne ograniczenia. Zapraszamy do pobrania wersji Clicker Pro.
+Pobierz Clicker Pro
+Portale aukcyjne
+Wybierz portal:
+Adres wyszukiwania:
+Szukaj frazy:
+Pobierz strony:
+Cena od:
+do:
+Powiadom:
+Clicker - powiadamiacz
+wyczyść listę
+ukryj wszystkie i zamknij
+(usuwa także ukryte elementy)
+odczekaj między stronami od
+Czekaj przed wczytaniem kolejnej strony aukcji
+Wczytywanie strony aukcji
+elementów ukrytych:
+Zmienne zawarte w nawiasach klamrowych są automatycznie podmieniane. Nie wymagana jest ich zmiana. Adres zapytania można dowolnie modyfikować i dopisywać odpowiednie parametry charakterystyczne dla danego portalu.
+W niektórych przypadkach można tutaj zdefiniować identyfikator użytkownika: user-id.
+Brak aukcji.
+Kup teraz
+Aukcja
+LP
+PORTAL
+ZDJĘCIE
+TYTUŁ
+CENA
+INFO
+ZOSTAŁEŚ ZABLOKOWANY / ZRESETUJ SWOJE IP LUB SPRÓBUJ ODBLOKOWAĆ
+BLOKADA
+ODBLOKUJ
+Nie znaleziono nowych aukcji lub nie zdefiniowano akcji wyszukiwania po portalach aukcyjnych.
+Opcje E-mail
+Opcje SMS
+Integracja z smsapi.com / smsapi.pl:
+Adres url (z api):
+Login:
+Hasło:
+wyślij testowy sms
+Nazwa użytkownika:
+wyślij testową wiadomość e-mail
+Adres SMTP serwera poczty:
+Port:
+Adres e-mail:
+Szyfrowanie SSL:
+Numer telefonu (np.: 48500500500):
+Przykładowa wiadomość
+Wiadomość z programu Clicker 
+Wiadomość została wysłana
+czekaj ...
+Tytuł:
+Wiadomość (wsparcie dla wiadomości w formacie html):
+Login / e-mail:
+Elementów:
+Wiadomość:
+tylko jeden raz
+akcja pominięta
+domyślna akcja myszy:
+Wznów
+rozpocznij od akcji:
+domyślna edycja akcji:
+Skróty klawiaturowe
+Uruchom:
+Uruchom i minimalizuj:
+Zakończ:
+Wznów:
+Zatrzymanie programu:
+Zatrzymanie: 
+Skróty wymagające aktywacji opcji "global hook":
+Skróty wymagające aktywnego okna:
+Sprawdź dostępność aktualizacji

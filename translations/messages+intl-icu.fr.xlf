@@ -2,6 +2,99 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
         <body>
+
+            <trans-unit id="test.h1">
+                <source>test.h1</source>
+                <target><![CDATA[<span class="btn btn-danger">DONNEES DE TEST</span>]]></target>
+            </trans-unit>
+            <trans-unit id="label.label.departement">
+                <source>label.label.departement</source>
+                <target>Departement</target>
+            </trans-unit>
+            <trans-unit id="label.ville">
+                <source>label.ville</source>
+                <target>ville</target>
+            </trans-unit>
+            <trans-unit id="label.region">
+                <source>label.region</source>
+                <target>Région</target>
+            </trans-unit>
+            <trans-unit id="label.boiteVitesse">
+                <source>label.boiteVitesse</source>
+                <target>Boite de vitesse</target>
+            </trans-unit>
+            <trans-unit id="label.piecesDetachees">
+                <source>label.piecesDetachees</source>
+                <target>pieces Détachées</target>
+            </trans-unit>
+            <trans-unit id="label.puissanceFiscale">
+                <source>label.puissanceFiscale</source>
+                <target>puissance fiscale</target>
+            </trans-unit>
+            <trans-unit id="label.LOA">
+                <source>label.LOA</source>
+                <target>Soumis au LOA</target>
+            </trans-unit>
+            <trans-unit id="label.permis">
+                <source>label.permis</source>
+                <target>Avec permis</target>
+            </trans-unit>
+            <trans-unit id="label.din">
+                <source>label.din</source>
+                <target>Puissance Din</target>
+            </trans-unit>
+            <trans-unit id="label.portes">
+                <source>label.portes</source>
+                <target>Nombre de portes</target>
+            </trans-unit>
+            <trans-unit id="label.places">
+                <source>label.places</source>
+                <target>Nombre de places</target>
+            </trans-unit>
+            <trans-unit id="label.couleur">
+                <source>label.couleur</source>
+                <target>Couleur</target>
+            </trans-unit>
+            <trans-unit id="label.carburant">
+                <source>label.carburant</source>
+                <target>Type de carburant</target>
+            </trans-unit>
+            <trans-unit id="label.vehiculeType">
+                <source>label.vehiculeType</source>
+                <target>Type de véhicule</target>
+            </trans-unit>
+            <trans-unit id="label.marque">
+                <source>label.marque</source>
+                <target>Liste des marques</target>
+            </trans-unit>
+            <trans-unit id="label.anneeModele">
+                <source>label.anneeModele</source>
+                <target>Année du modele</target>
+            </trans-unit>
+            <trans-unit id="site.search">
+                <source>site.search</source>
+                <target>Filtres de recherche</target>
+            </trans-unit>
+            <trans-unit id="label.modele">
+                <source>label.modele</source>
+                <target>Liste des modeles</target>
+            </trans-unit>
+            <trans-unit id="site">
+                <source>site.list</source>
+                <target>Sites accessibles</target>
+            </trans-unit>
+            <trans-unit id="site.details">
+                <source>site.details</source>
+                <target>Les différentes catégories</target>
+            </trans-unit>
+            <trans-unit id="categ.retour">
+                <source>categ.retour</source>
+                <target>Retour à la liste des catégories</target>
+            </trans-unit>
+            <trans-unit id="site.retour">
+                <source>site.retour</source>
+                <target>Retour à la liste des sites</target>
+            </trans-unit>
             <trans-unit id="new">
                 <source>new.name</source>
                 <target>Nouveau nom de produit</target>
@@ -62,7 +155,7 @@
 
             <trans-unit id="title.homepage">
                 <source>title.homepage</source>
-                <target><![CDATA[Bienvenue sur l'application <strong>Symfony Demo</strong>]]></target>
+                <target><![CDATA[Analysez le marché grâce aux données parsées ]]></target>
             </trans-unit>
             <trans-unit id="title.source_code">
                 <source>title.source_code</source>
@@ -175,11 +268,19 @@
             </trans-unit>
             <trans-unit id="action.browse_app">
                 <source>action.browse_app</source>
-                <target>Naviguer sur l'application</target>
+                <target>Données réelles</target>
+            </trans-unit>
+            <trans-unit id="help.connected">
+                <source>help.connected</source>
+                <target>Accéder à ses données mises à jour en temps réel</target>
+            </trans-unit>
+            <trans-unit id="help.connectedButton">
+                <source>help.connectedButton</source>
+                <target>Tableau de bord</target>
             </trans-unit>
             <trans-unit id="action.browse_admin">
                 <source>action.browse_admin</source>
-                <target>Naviguer sur l'admin</target>
+                <target>Découvrez la puissance de l'outils</target>
             </trans-unit>
             <trans-unit id="action.edit_user">
                 <source>action.edit_user</source>
@@ -361,7 +462,7 @@
 
             <trans-unit id="help.app_description">
                 <source>help.app_description</source>
-                <target><![CDATA[Ceci est une <strong>application de démonstration</strong> construite avec le framework Symfony pour illustrer la façon recommandée de développer des applications Symfony.]]></target>
+                <target><![CDATA[Vous pourrez <strong>grâce aux données récoltées</strong> avoir un oeil averti sur les prix et les tendances du marché. Ces données sont <strong>hautement sensibles</strong> et ne doivent pas être divulguées.<br/><br/> <p><b>Ces données sont mises à jour toutes les heures !</b></p><br/>]]></target>
             </trans-unit>
             <trans-unit id="help.show_code">
                 <source>help.show_code</source>
@@ -369,11 +470,11 @@
             </trans-unit>
             <trans-unit id="help.browse_app">
                 <source>help.browse_app</source>
-                <target><![CDATA[Parcourir la <strong>section publique</strong> de l'application de démonstration.]]></target>
+                <target><![CDATA[Connectez-vous pour accéder à votre <strong>espace perso</strong>]]></target>
             </trans-unit>
             <trans-unit id="help.browse_admin">
                 <source>help.browse_admin</source>
-                <target><![CDATA[Parcourir l'<strong>interface d'administration</strong> de l'application de démonstration.]]></target>
+                <target><![CDATA[Essayez avec les données de test de l'application.]]></target>
             </trans-unit>
             <trans-unit id="help.login_users">
                 <source>help.login_users</source>
@@ -397,7 +498,7 @@
             </trans-unit>
             <trans-unit id="help.more_information">
                 <source>help.more_information</source>
-                <target><![CDATA[Pour plus d'informations, consultez la <a href="https://symfony.com/doc">documentation de Symfony</a>.]]></target>
+                <target><![CDATA[Vous pouvez contacter l'auteur du site pour ajouter une source <a href="mailto:moneo.house.atreides@gmail.com">Contacter l'admin</a>.]]></target>
             </trans-unit>
             <trans-unit id="help.post_summary">
                 <source>help.post_summary</source>

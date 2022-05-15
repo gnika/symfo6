@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block title %}  sites {% endblock %}
+
+{% block h1Title %}{{ 'site.list'|trans|raw }}{% endblock %}
+{% block main %}
+
+
+    {%  if sites is not empty  %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th></th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for site in sites %}
+                <tr>
+                    <td>{{ site.id }}</td>
+                    <td><img src="/media/sites/{{ site.logo }}" alt="{{ site.name }}" /></td>
+                    <td>{{ site.name }}</td>
+                    <td>
+                        <a href="{{ path('request_site', {'id':
+                            site.id}) }}">details</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        no records found
+    {% endif %}
+{% endblock %}
+{% block sidebar %}
+    {{ parent() }}
+{% endblock %}

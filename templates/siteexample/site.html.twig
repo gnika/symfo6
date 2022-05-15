@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}  site {% endblock %}
+
+{% block h1Title %}{{ 'site.details'|trans|raw }} {{ site }}  {{ 'test.h1'|trans|raw }}{% endblock %}
+{% block main %}
+
+    <a href="{{ path('listingSiteexample')}}">{{ 'site.retour'|trans|raw }}</a>
+    {%  if categs is not empty  %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for categ in categs %}
+                <tr>
+                    <td>{{ categ.id }}</td>
+                    <td>{{ categ.name }}</td>
+                    <td>
+                        <a href="{{ path('request_categexample', {'id':
+                            categ.id}) }}">details</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        no records found
+    {% endif %}
+{% endblock %}
+{% block sidebar %}
+    {{ parent() }}
+{% endblock %}
