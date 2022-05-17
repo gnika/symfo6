@@ -54,6 +54,9 @@ class Parse1ExampleRepository extends ServiceEntityRepository
         $parameters  = [];
         $entityManager = $this->getEntityManager();
         if( $data != null) {
+            if ($data['avecNumeroDeTelephone'] != '') {
+                $request .= ' and p.telephone <> 1 and p.telephone <> -1 and p.telephone <> 0 and p.telephone is not null';
+            }
             if ($data['couleur'] != '') {
                 $request .= ' and p.couleur = :couleur';
                 $parameters[] = 'couleur';
@@ -121,6 +124,10 @@ class Parse1ExampleRepository extends ServiceEntityRepository
             if ($data['date_circulation_max'] != '') {
                 $request .= ' and p.dateCirculation >= :date_circulation_max';
                 $parameters[] = 'date_circulation_max';
+            }
+            if ($data['DateDeRecuperation'] != '') {
+                $request .= ' and p.created_at >= :DateDeRecuperation';
+                $parameters[] = 'DateDeRecuperation';
             }
             if ($data['region'] != '') {
                 $request .= ' and p.region = :region';
@@ -155,6 +162,9 @@ class Parse1ExampleRepository extends ServiceEntityRepository
         $parameters  = [];
         $entityManager = $this->getEntityManager();
         if( $data != null) {
+            if ($data['avecNumeroDeTelephone'] != '') {
+                $request .= ' and p.telephone <> 1 and p.telephone <> -1 and p.telephone <> 0 and p.telephone is not null';
+            }
             if ($data['couleur'] != '') {
                 $request .= ' and p.couleur = :couleur';
                 $parameters[] = 'couleur';
@@ -222,6 +232,10 @@ class Parse1ExampleRepository extends ServiceEntityRepository
             if ($data['date_circulation_max'] != '') {
                 $request .= ' and p.dateCirculation >= :date_circulation_max';
                 $parameters[] = 'date_circulation_max';
+            }
+            if ($data['DateDeRecuperation'] != '') {
+                $request .= ' and p.created_at >= :DateDeRecuperation';
+                $parameters[] = 'DateDeRecuperation';
             }
             if ($data['region'] != '') {
                 $request .= ' and p.region = :region';

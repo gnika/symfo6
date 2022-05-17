@@ -19,7 +19,7 @@
             {% for site in sites %}
                 <tr>
                     <td>{{ site.id }}</td>
-                    <td><img src="/media/sites/{{ site.logo }}" alt="{{ site.name }}" /></td>
+                    <td><img src="/media/sites/{{ site.logo }}" width="100%" alt="{{ site.name }}" /></td>
                     <td>{{ site.name }}</td>
                     <td>
                         <a href="{{ path('request_siteexample', {'id':

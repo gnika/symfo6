@@ -7,9 +7,57 @@
                 <source>test.h1</source>
                 <target><![CDATA[<span class="btn btn-danger">DONNEES DE TEST</span>]]></target>
             </trans-unit>
-            <trans-unit id="label.label.departement">
-                <source>label.label.departement</source>
+            <trans-unit id="label.departement">
+                <source>label.departement</source>
                 <target>Departement</target>
+            </trans-unit>
+            <trans-unit id="label.pieces">
+                <source>label.pieces</source>
+                <target>Nombre de pieces</target>
+            </trans-unit>
+            <trans-unit id="label.chambres">
+                <source>label.chambres</source>
+                <target>Nombre de chambres</target>
+            </trans-unit>
+            <trans-unit id="label.parking">
+                <source>label.parking</source>
+                <target>Place de parking</target>
+            </trans-unit>
+            <trans-unit id="label.charges">
+                <source>label.charges</source>
+                <target>Charges</target>
+            </trans-unit>
+            <trans-unit id="label.meuble">
+                <source>label.meuble</source>
+                <target>Meublé</target>
+            </trans-unit>
+            <trans-unit id="label.ges">
+                <source>label.ges</source>
+                <target>Classement GES</target>
+            </trans-unit>
+            <trans-unit id="label.etages">
+                <source>label.etages</source>
+                <target>Etages de l'immeuble</target>
+            </trans-unit>
+            <trans-unit id="label.etage">
+                <source>label.etage</source>
+                <target>Etages du bien</target>
+            </trans-unit>
+            <trans-unit id="label.vente">
+                <source>label.vente</source>
+                <target>Vente ou location</target>
+            </trans-unit>
+            <trans-unit id="label.energie">
+                <source>label.energie</source>
+                <target>Classement d'énergie</target>
+            </trans-unit>
+            <trans-unit id="label.typeDeVente">
+                <source>label.typeDeVente</source>
+                <target>Type de vente</target>
+            </trans-unit>
+            <trans-unit id="label.typeDeBien">
+                <source>label.typeDeBien</source>
+                <target>Type de bien</target>
             </trans-unit>
             <trans-unit id="label.ville">
                 <source>label.ville</source>
@@ -280,7 +328,7 @@
             </trans-unit>
             <trans-unit id="action.browse_admin">
                 <source>action.browse_admin</source>
-                <target>Découvrez la puissance de l'outils</target>
+                <target>Découvrez la puissance de l'outil</target>
             </trans-unit>
             <trans-unit id="action.edit_user">
                 <source>action.edit_user</source>

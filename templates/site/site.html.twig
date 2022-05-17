@@ -18,7 +18,7 @@
             {% for categ in categs %}
                 <tr>
                     <td>{{ categ.id }}</td>
-                    <td>{{ categ.name }}</td>
+                    <td>{{ categ.name|replace({'_': ''}) }}</td>
                     <td>
                         <a href="{{ path('request_categ', {'id':
                             categ.id}) }}">details</a>

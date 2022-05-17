@@ -4,15 +4,16 @@
 {% block h1Title %} {{ categorie.site.name }} / {{ categorie.name }} {{ 'test.h1'|trans|raw }} {% endblock %}
 {% block body %}
 
-    <a href="{{ path('listingSiteexample')}}">{{ 'categ.retour'|trans|raw }}</a>
+    <a href="{{ path('request_siteexample', { 'id': categorie.site.id })}}">{{ 'categ.retour'|trans|raw }}</a>
 
     <h2>{{ 'site.search'|trans|raw }} <i class="fa fa-minus"></i> <i class="fa fa-plus"></i></h2>
-    {{ form(form, { attr: {novalidate: 'novalidate'} }) }}
+    <div class="formulaire">{{ form(form, { attr: {novalidate: 'novalidate'} }) }}</div>
     {%  if donnees is not empty  %}
 
                 {# sorting of properties based on query components #}
                 <div{% if pagination.isSorted('datePublication') %} class="sorted"{% endif %}>
                     Trier par {{ knp_pagination_sortable(pagination, 'Date de publication', 'datePublication') }}
+                    Trier par {{ knp_pagination_sortable(pagination, 'Date de récupération de l\'annonce', 'createdAt') }}
                 </div>
 
 

@@ -47,6 +47,24 @@ class SiteRepository extends ServiceEntityRepository
         }
     }
 
+    public function getDonneesDuMois(){
+
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT count(p.id)
+            FROM App\Entity\Parse1 p
+            '
+        );
+        $result = $query->getSingleResult();
+        $query = $entityManager->createQuery(
+            'SELECT count(p.id)
+            FROM App\Entity\Parse2 p
+            '
+        );
+        $result2 = $query->getSingleResult();
+        return ($result[1]+$result2[1]);
+    }
+
     // /**
     //  * @return Site[] Returns an array of Site objects
     //  */

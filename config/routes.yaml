@@ -22,19 +22,15 @@ homepage:
     path: /{_locale}
     requirements:
         _locale: '%app_locales%'
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    controller: App\Controller\SiteController::homepage
     defaults:
-        template: default/homepage.html.twig
         _locale: '%locale%'
 
 homepage2:
     path: /fr
     requirements:
         _locale: '%app_locales%'
-    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-    defaults:
-        template: default/homepage.html.twig
-        _locale: '%locale%'
+    controller: App\Controller\SiteController::homepage
 
 app_logout:
     path: /logout

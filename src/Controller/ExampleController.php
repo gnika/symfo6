@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\CategorySite;
 use App\Entity\Parse1;
 use App\Entity\Parse1Example;
+use App\Entity\Parse2;
 use App\Entity\Site;
 use App\Form\Type\SearchParse1Type;
+use App\Form\Type\SearchParse2Type;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -79,7 +81,7 @@ class ExampleController extends AbstractController
 	{
 
         $type = 'Parse'.$categorySite->getId().'Example';
-
+        $page = 'parse1';
         if( $categorySite->getId() == 1 ) {
 
             $parse1 = $this->em->getRepository(Parse1Example::class);
@@ -127,6 +129,14 @@ class ExampleController extends AbstractController
                 unset($data['date_circulation_max']);
             if( isset($data['date_circulation_max']) && $data['date_circulation_max'] != '' )
                 $data['date_circulation_max'] = new \DateTime($data['date_circulation_max']);
+
+
+
+            if( isset($data['DateDeRecuperation']) && $data['DateDeRecuperation'] == '' )
+                unset($data['DateDeRecuperation']);
+            if( isset($data['DateDeRecuperation']) && $data['DateDeRecuperation'] != '' )
+                $data['DateDeRecuperation'] = new \DateTime($data['DateDeRecuperation']);
+
             $form->setData($data);
 
             //GENERATION CSV
@@ -164,13 +174,97 @@ class ExampleController extends AbstractController
                 return $response;
             }
         }
+        if( $categorySite->getId() == 2 ) {
+
+            $parse2 = $this->em->getRepository(Parse2::class);
+
+            $data = $request->get('search_parse2');
+
+
+
+            $donnees                 = $parse2->findAllwithout2($data);
+            $donneesPrix             = $parse2->findAllwithout2Prix($data);
+            $typeDeBien              = $parse2->findAllField('typeDeBien');
+            $typeDeVente             = $parse2->findAllField('typeDeVente');
+            $pieces                  = $parse2->findAllField('pieces');
+            $chambres                = $parse2->findAllField('chambres');
+            $energie                 = $parse2->findAllField('energie');
+            $ges                     = $parse2->findAllField('ges');
+            $vente                   = $parse2->findAllField('vente');
+            $etages                  = $parse2->findAllField('etages');
+            $etage                   = $parse2->findAllField('etage');
+            $parking                 = $parse2->findAllField('parking');
+            $charges                 = $parse2->findAllField('charges');
+            $meuble                  = $parse2->findAllField('meuble');
+            $region                  = $parse2->findAllField('region');
+            $departement             = $parse2->findAllField('departement');
+
+
+            $form = $this->createForm(SearchParse2Type::class, null,
+                [
+                    'typeDeBien'      => $typeDeBien,
+                    'typeDeVente'      => $typeDeVente,
+                    'pieces'          => $pieces,
+                    'energie'         => $energie,
+                    'ges'             => $ges,
+                    'vente'           => $vente,
+                    'etages'          => $etages,
+                    'etage'           => $etage,
+                    'parking'         => $parking,
+                    'charges'         => $charges,
+                    'meuble'          => $meuble,
+                    'region'          => $region,
+                    'departement'     => $departement,
+                    'chambres'        => $chambres,
+
+                ]);
+
+            if( isset($data['DateDeRecuperation']) && $data['DateDeRecuperation'] == '' )
+                unset($data['DateDeRecuperation']);
+            if( isset($data['DateDeRecuperation']) && $data['DateDeRecuperation'] != '' )
+                $data['DateDeRecuperation'] = new \DateTime($data['DateDeRecuperation']);
+            $form->setData($data);
+
+            //GENERATION CSV
+            if( isset( $data['ExporterLaRecherche'] ) ) {
+                $content = 'ID;TITRE;VILLE;TYPE DE BIEN;TYPE DE VENTE;PIECES;ENERGIE;GES;VENTE;ETAGES DE L\'IMMEUBLE;ETAGE DE L\'APPARTEMENT;PARKING;CHARGES;MEUBLES;REFERENCE;SURFACE;SURFACE DU TERRAIN;DESCRIPTION;TELEPHONE;URL LEBONCOIN;DATE DE RECUPERATION DE L\'ANNONCE;REGION;DEPARTEMENT;DATE DE PUBLICATION DE L\'ANNONCE;PRIX;IMAGES';
+                $content.= "\n";
+                foreach ($donnees as $donnee) {
+
+                    if( $donnee->getDatePublication() != NULL)
+                        $datePublication = $donnee->getDatePublication()->format('Y-m-d H:i:s');
+                    else
+                        $datePublication = '';
+                    if( $donnee->getCreatedAt() != NULL)
+                        $createdAt = $donnee->getCreatedAt()->format('Y-m-d H:i:s');
+                    else
+                        $createdAt = '';
+                    $description = str_replace(';', '-', $donnee->getDescription());
+                    $description = str_replace("\n", ' /// ', $description);
+                    $content.=$donnee->getId().';'.$donnee->getTitre().';'.$donnee->getVille().';'.$donnee->getTypeDeBien().';'.$donnee->getTypeDeVente().';'.
+                        $donnee->getPieces().';'.$donnee->getEnergie().';'.$donnees->getGes().';'.$donnee->getVente().';'.
+                        $donnee->getEtages().';'.$donnee->getEtage().';'.$donnee->getParking().';'.$donnee->getCharges().';'.
+                        $donnee->getMeuble().';'.$donnee->getReference().';'.$donnee->getSurface().';'.$donnee->getSurfaceDuTerrain().';'.$description.';'.
+                        $donnee->getTelephone().';'.$donnee->getUrlOffre().';'.$createdAt.';'.$donnee->getRegion().';'.
+                        $donnee->getDepartement().';'.$datePublication.';'.$donnee->getPrix().';'.$donnee->getImages().';'."\n";
+
+                }
+
+                $response = new Response($content);
+                $response->headers->set('Content-Type', 'text/csv');
+
+                return $response;
+            }
+
+            $page = 'parse2';
+        }
 
         $pagination = $paginator->paginate(
             $donnees, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
-        return $this->render('siteExample/parse1.html.twig', [
+        return $this->render('siteexample/'.$page.'.html.twig', [
             'donnees' => $donnees,
             'donneesPrix' => $donneesPrix[0][1],
             'categorie' => $categorySite,

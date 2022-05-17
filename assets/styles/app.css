@@ -30,7 +30,7 @@ div.pop-up {
     position: absolute;
 }
 
-#search_parse1 .mb-3.row:last-of-type .col-sm-10{
+#search_parse1 .mb-3.row:last-of-type .col-sm-10, #search_parse2 .mb-3.row:last-of-type .col-sm-10{
     text-align: right;
 }
 .form-control{

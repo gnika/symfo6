@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ categorie.site.name }} {% endblock %}
+
+{% block h1Title %} {{ categorie.site.name }} / {{ categorie.name }} {{ 'test.h1'|trans|raw }} {% endblock %}
+{% block body %}
+
+    <a href="{{ path('request_siteexample', { 'id': categorie.site.id })}}">{{ 'categ.retour'|trans|raw }}</a>
+
+    <h2>{{ 'site.search'|trans|raw }} <i class="fa fa-minus"></i> <i class="fa fa-plus"></i></h2>
+    <div class="formulaire">{{ form(form, { attr: {novalidate: 'novalidate'} }) }}</div>
+    {%  if donnees is not empty  %}
+
+                {# sorting of properties based on query components #}
+                <div{% if pagination.isSorted('datePublication') %} class="sorted"{% endif %}>
+                    Trier par {{ knp_pagination_sortable(pagination, 'Date de publication', 'datePublication') }}<br/>
+                    Trier par {{ knp_pagination_sortable(pagination, 'Date de récupération de l\'annonce', 'createdAt') }}
+                </div>
+
+
+
+        {# total items count #}
+        <div class="count">
+            <h2>{{ pagination.getTotalItemCount }} offres</h2>
+        </div>
+        <div class="alert alert-success">
+            <h2>PRIX MOYEN DE LA RECHERCHE : {{ donneesPrix }} €</h2>
+        </div>
+
+            {% for article in pagination %}
+
+            <article class="post">
+                <h2>
+                    <a target="_blank" href="https://www.leboncoin.fr/voitures/{{ article.urlOffre }}">
+                        {{ article.titre }}
+                    </a>
+                </h2>
+
+
+                <p class="post-metadata">
+                    <a href="#"
+                       class="label label-warning"
+                    >
+                    <span class="metadata"><i title="prix" class="fa fa-usd"> {{ article.prix }}€</i></span>
+                    </a>
+                    <a href="#"
+                               class="label label-success"
+                            ><span class="metadata"><i title="Type de bien" class="fa fa-chain"> {{ article.typeDeBien }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Type de vente" class="fa fa-bank"> {{ article.typeDeVente }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Surface" class="fa fa-bar-chart"> {{ article.surface }}</i></span>
+                    </a>
+                    <a href="#"
+                       class="label label-success"
+                    > <span class="metadata"><i title="Surface du terrain" class="fa fa-bar-chart"> {{ article.surfaceDuTerrain }}</i></span>
+                    </a>
+                    <a href="#"
+                       class="label label-info"
+                    > <span class="metadata"><i title="Ville" class="fa fa-map-marker"> {{ article.ville }}</i></span>
+                    </a>
+                    <a href="#"
+                                   class="label label-info"
+                                > <span class="metadata"><i title="Région" class="fa fa-map-marker"> {{ article.region }}</i></span>
+                    </a>
+                    <a href="#"
+                                   class="label label-info"
+                                > <span class="metadata"><i title="Département" class="fa fa-map-marker"> {{ article.departement }}</i></span>
+                    </a>
+<br/>
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Nombre de pièces" class="fa fa-user-o"> {{ article.pieces }}</i></span>
+                    </a>
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Nombre de chambres" class="fa fa-user-o"> {{ article.chambres }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Classement energie" class="fa fa-bolt"> {{ article.energie }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="GES" class="fa fa-tree"> {{ article.ges }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Vente/location..." class="fa fa-address-book"> {{ article.vente }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Nombre d'étage de l'immeuble" class="fa fa-building"> {{ article.etages }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Etage du bien" class="fa fa-building"> {{ article.etage }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   class="label label-success"
+                                > <span class="metadata"><i title="Places de parking" class="fa fa-car"> {{ article.parking }}</i></span>
+                    </a>
+
+                    <a href="#"
+                       {% if  article.charges is  null  %}class="label label-default"{% else %}class="label label-success"{% endif %}
+                                > <span class="metadata"><i title="Charges" class="fa fa-line-chart">{{ article.charges }}</i></span>
+                    </a>
+
+                    <a href="#"
+                       {% if  article.meuble == 0 or article.meuble =="Non renseignée" or article.meuble is  null  %}class="label label-default"{% else %}class="label label-success"{% endif %}
+                                > <span class="metadata"><i title="Meublé" class="fa fa-bed"> {{ article.meuble }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   {% if  article.reference == 0 or article.reference is  null  %}class="label label-default"{% else %}class="label label-success"{% endif %}
+                                > <span class="metadata"><i title="Référence" class="fa fa-bookmark"> {{ article.reference }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   {% if  article.honoraires == 0 or article.honoraires is  null  %}class="label label-default"{% else %}class="label label-success"{% endif %}
+                                > <span class="metadata"><i title="Honoraires" class="fa fa-envelope-open-o"> {{ article.honoraires }}</i></span>
+                    </a>
+
+                    <a href="#"
+                                   {% if  article.telephone == 1 or  article.telephone == 0 or  article.telephone == -1 or article.telephone is  null  or article.telephone == -1 %}class="label label-default"{% else %}class="label label-red"{% endif %}
+                                > <span class="metadata"><i title="Téléphone" class="fa fa-phone"> {% if  article.telephone == 1 or  article.telephone == -1 or  article.telephone == 0 or article.telephone is  null %} {% else %}{{ article.telephone }}{% endif %}</i></span>
+                    </a>
+
+
+                    <span class="metadata"><i title="Publication de l'annonce" class="fa fa-calendar"> {{ article.datePublication|date("d/m/Y") }}</i></span>
+                    <span class="metadata"><i title="Date de récupération de l'annonce" class="fa fa-calendar"> {{ article.createdAt|date("d/m/Y") }}</i></span>
+
+                </p>
+                {% set images = article.images | json_decode %}
+                {% for image in images %}
+                    <img class="imgHover" width="50px" src="{{ image }}" />
+                {% endfor %}
+                <p class="descriptionArticle"><span>{{ article.description|slice(0, 50) ~ '...' }}</span></p>
+                <div class="pop-up">
+                    <p>
+                        {{ article.description}}
+                    </p>
+
+                </div>
+
+            </article>
+                {% endfor %}
+
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        no records found
+    {% endif %}
+{% endblock %}

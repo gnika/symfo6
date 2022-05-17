@@ -54,6 +54,9 @@ class Parse1Repository extends ServiceEntityRepository
         $parameters  = [];
         $entityManager = $this->getEntityManager();
         if( $data != null) {
+            if ($data['avecNumeroDeTelephone'] != '') {
+                $request .= ' and p.telephone <> 1 and p.telephone <> -1 and p.telephone <> 0 and p.telephone is not null';
+            }
             if ($data['couleur'] != '') {
                 $request .= ' and p.couleur = :couleur';
                 $parameters[] = 'couleur';
@@ -122,6 +125,10 @@ class Parse1Repository extends ServiceEntityRepository
                 $request .= ' and p.dateCirculation >= :date_circulation_max';
                 $parameters[] = 'date_circulation_max';
             }
+            if ($data['DateDeRecuperation'] != '') {
+                $request .= ' and p.created_at >= :DateDeRecuperation';
+                $parameters[] = 'DateDeRecuperation';
+            }
             if ($data['region'] != '') {
                 $request .= ' and p.region = :region';
                 $parameters[] = 'region';
@@ -133,6 +140,10 @@ class Parse1Repository extends ServiceEntityRepository
             if ($data['ville'] != '') {
                 $request .= ' and p.ville = :ville';
                 $parameters[] = 'ville';
+            }
+            if ($data['titre'] != '') {
+                $request .= ' and p.titre = :titre';
+                $parameters[] = 'titre';
             }
         }
 
@@ -155,6 +166,9 @@ class Parse1Repository extends ServiceEntityRepository
         $parameters  = [];
         $entityManager = $this->getEntityManager();
         if( $data != null) {
+            if ($data['avecNumeroDeTelephone'] != '') {
+                $request .= ' and p.telephone <> 1 and p.telephone <> -1 and p.telephone <> 0 and p.telephone is not null';
+            }
             if ($data['couleur'] != '') {
                 $request .= ' and p.couleur = :couleur';
                 $parameters[] = 'couleur';
@@ -223,6 +237,10 @@ class Parse1Repository extends ServiceEntityRepository
                 $request .= ' and p.dateCirculation >= :date_circulation_max';
                 $parameters[] = 'date_circulation_max';
             }
+            if ($data['DateDeRecuperation'] != '') {
+                $request .= ' and p.created_at >= :DateDeRecuperation';
+                $parameters[] = 'DateDeRecuperation';
+            }
             if ($data['region'] != '') {
                 $request .= ' and p.region = :region';
                 $parameters[] = 'region';
@@ -234,6 +252,10 @@ class Parse1Repository extends ServiceEntityRepository
             if ($data['ville'] != '') {
                 $request .= ' and p.ville = :ville';
                 $parameters[] = 'ville';
+            }
+            if ($data['titre'] != '') {
+                $request .= ' and p.titre = :titre';
+                $parameters[] = 'titre';
             }
         }
 

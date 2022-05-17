@@ -56,17 +56,17 @@ $(function() {
 
 });
 
-$("#search_parse1").hide();
+$(".formulaire").hide();
 $(".fa-minus").hide();
 
 $(".fa-minus").click(function(){
-    $("#search_parse1").hide();
+    $(".formulaire").hide();
     $(".fa-minus").hide();
     $(".fa-plus").show();
 });
 
 $(".fa-plus").click(function(){
-    $("#search_parse1").show();
+    $(".formulaire").show();
     $(".fa-plus").hide();
     $(".fa-minus").show();
 });

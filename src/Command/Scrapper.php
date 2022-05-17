@@ -2,10 +2,11 @@
 namespace App\Command;
 use App\Entity\CategorySite;
 use App\Entity\Parse1;
+use App\Entity\Parse2;
 use App\Entity\Site;
-use App\Repository\CategoryRepository;
 use App\Repository\CategorySiteRepository;
 use App\Repository\Parse1Repository;
+use App\Repository\Parse2Repository;
 use App\Repository\SiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use simplehtmldom_1_5\simple_html_dom;
@@ -24,23 +25,27 @@ class Scrapper extends Command
     protected static $defaultName = 'scrapper:leboncoin';
     //scrapper:leboncoin            ====> scrapper les pages liste
     //scrapper:leboncoin -r 1       ====> faire un reset
-    //scrapper:leboncoin details    ====> scrapper les pages details
+    //scrapper:leboncoin details    ====> scrapper les pages details voitures
+    //scrapper:leboncoin -c2        ====> scrapper les pages liste immobilier
+    //scrapper:leboncoin details -c2
     protected static $defaultDescription = 'Scrapper';
     /** @var EntityManagerInterface */
     private $entityManager;
     /** @var SiteRepository */
     private $siteRepository;
-    /** @var CategoryRepository */
+    /** @var CategorySiteRepository */
     private $categoryRepository;
     public function __construct(EntityManagerInterface $entityManager,
                                 SiteRepository $siteRepository,
                                 Parse1Repository $parse1Repository,
+                                Parse2Repository $parse2Repository,
                                 CategorySiteRepository $categoryRepository)
     {
         $this->entityManager = $entityManager;
         $this->siteRepository = $siteRepository;
         $this->categoryRepository = $categoryRepository;
         $this->parse1Repository = $parse1Repository;
+        $this->parse2Repository = $parse2Repository;
         parent::__construct();
     }
     protected function configure(): void
@@ -107,28 +112,42 @@ class Scrapper extends Command
                 else
                     $urlFinal = $urlSite . $categoryFinal . '/p-' . $category->getParseList();
 
-                $ch = curl_init();
+                $ch = curl_init();echo $urlFinal;
                 curl_setopt($ch, CURLOPT_URL, 'https://api.proxycrawl.com/?token=b5EzeICBK1os1ZSr_hTDAw&url=' . $urlFinal);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
                 $response = curl_exec($ch);
                 curl_close($ch);
 
-
                 $response = explode('<div class="styles_classifiedColumn__FvVg5">', $response);
-                if( !isset($response[1]))
+                if( !isset($response[1])) {
+                    echo "datadome\n";
                     continue;
+                }
 
-                $response = '<div class="styles_classifiedColumn__FvVg5">' . $response[1];
-                $response = explode('<div class="styles_sideColumn__MyCwB">', $response);
-                $response = $response[0];
+                if( $categoryId == 1 ) {
+                    $response = '<div class="styles_classifiedColumn__FvVg5">' . $response[1];
+                    $response = explode('<div class="styles_sideColumn__MyCwB">', $response);
+                    $response = $response[0];
+                }else
+                    $response = $response[1];
 
                 $urls = explode('href="/'.$categoryName.'/', $response);
+
                 foreach ($urls as $url) {
                     $url = explode('"', $url);
                     if (strpos($url[0], '.') !== false) {
 
-                        $dejaEnBase = $this->parse1Repository->findOneBy(['urlOffre' => $url[0]]);
+                        if( $categoryId == 1) {
+
+                            $parse = new Parse1();
+                            $dejaEnBase = $this->parse1Repository->findOneBy(['urlOffre' => $url[0]]);
+                        }
+                        if( $categoryId == 2) {
+
+                            $parse = new Parse2();
+                            $dejaEnBase = $this->parse2Repository->findOneBy(['urlOffre' => $url[0]]);
+                        }
 
                         if ($dejaEnBase == '') {
 
@@ -136,18 +155,16 @@ class Scrapper extends Command
                             fwrite($myfile, $urlSite . "/".$categoryName."/" . $url[0]);
                             fclose($myfile);
 
-                            if( $categoryId == 1 ) {
 
-                                $parse1 = new Parse1();
-                                $parse1->setCategorySite($category);
-                                $parse1->setDetails(0);
-                                $parse1->setTitre($categoryId);//titre non permanent
-                                $parse1->setCreatedAt(new \DateTimeImmutable());
-                                $parse1->setUrlOffre($url[0]);
-                                $this->entityManager->persist($parse1);
-                                $this->entityManager->flush();
+                            $parse->setCategorySite($category);
+                            $parse->setDetails(0);
+                            $parse->setTitre($categoryId);//titre non permanent
+                            $parse->setCreatedAt(new \DateTimeImmutable());
+                            $parse->setUrlOffre($url[0]);
+                            $this->entityManager->persist($parse);
+                            $this->entityManager->flush();
 
-                            }
+
                         }
 
                     }
@@ -160,14 +177,19 @@ class Scrapper extends Command
         }else{
             //DETAILS
 
+            if( $categoryId == 1 )
+                $annonces = $this->parse1Repository->findBy(['titre' => $categoryId]);
+            if( $categoryId == 2 )
+                $annonces = $this->parse2Repository->findBy(['titre' => $categoryId]);
 
-            $annonces = $this->parse1Repository->findBy(['titre' => $categoryId]);
             foreach( $annonces as $annonce ) {
 
 
                 $urlFinal = $urlSite . '/' . $category->getName() . '/' . $annonce->getUrlOffre();
-                //$urlFinal = 'https://www.leboncoin.fr/voitures/2120660619.htm';
-
+                //A CHECKER MAIS IL SEMBLE QUE LE DATADOME SOIT PRESENT BEAUCOUP PLUS SUR L IMMOBILIER - ON FORCE
+                //DONC L'URL AUX VOITURES
+                $urlFinal = $urlSite.'/voitures/'.$annonce->getUrlOffre();
+                //$urlFinal = "https://www.leboncoin.fr/voitures/2153468090.htm";
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, 'https://api.proxycrawl.com/?token=b5EzeICBK1os1ZSr_hTDAw&url=' . $urlFinal);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -180,18 +202,194 @@ class Scrapper extends Command
                  //fwrite($myfile, $response);
                  //fclose($myfile);
 
-
-                if ($categoryId == 1) {
+//die();
+                if ($categoryId == 2) {
 
                     $json = explode('<script id="__NEXT_DATA__" type="application/json" crossorigin="anonymous">', $response);
-                    if( !isset($json[1]))
+                    if( !isset($json[1])) {
+
+                        $pos = strpos($response, 'img.datadome.co');
+                        if ($pos === false) {
+                            $this->entityManager->remove($annonce);
+                            $this->entityManager->flush();
+
+                            $this->removeFile($categoryId, $annonce->getUrlOffre());
+                        }
                         continue;
+                    }
                     $json = explode('</script>', $json[1]);
 
                     $json = json_decode($json[0]);
 
-                    if( !isset( $json->props->pageProps->ad ))
+
+
+                    if( !isset( $json->props->pageProps->ad )) {
+
+                        $this->removeFile($categoryId, $annonce->getUrlOffre());
+                        $this->entityManager->remove($annonce);
+                        $this->entityManager->flush();
                         continue;
+                    }
+                    $ad = $json->props->pageProps->ad;
+                    $publication_date = $ad->first_publication_date;
+                    $titre            = $ad->subject;
+                    $description      = $ad->body;
+                    $price            = $ad->price[0];
+                    $images           = '';
+                    if( isset( $ad->images->urls )) {
+                        $images = $ad->images->urls;
+                        $images = json_encode($images);
+                    }
+
+                    $attributes       = $ad->attributes;
+
+                    /*
+                    echo '<pre>';
+                    print_r($attributes);
+                    die();
+                    */
+
+                    $possibleAttrs    = [
+                        'type_real_estate_sale', 'real_estate_type', 'square', 'land_plot_surface', 'rooms', 'energy_rate',
+                        'ges','lease_type','floor_number', 'nb_floors_building', 'nb_parkings', 'charges_included', 'furnished',
+                        'custom_ref', 'fai_included', 'bedrooms'
+                    ];
+
+                    $attEnBase = [];
+                    foreach( $attributes as $attr){
+                        $key = array_search($attr->key, $possibleAttrs);
+                        if( $key !== false )
+                            $attEnBase[$attr->key] = $attr->value_label;
+                    }
+
+                    foreach($attEnBase as $key => $att){
+                        switch ($key) {
+                            case 'bedrooms':
+                                $annonce->setChambres($att);
+                                break;
+                            case 'type_real_estate_sale':
+                                $annonce->setTypeDeBien($att);
+                                break;
+                            case 'real_estate_type':
+                                $annonce->setTypeDeVente($att);
+                                break;
+                            case 'square':
+                                $annonce->setSurface($att);
+                                break;
+                            case 'land_plot_surface':
+                                $annonce->setSurfaceDuTerrain($att);
+                                break;
+                            case 'rooms':
+                                $annonce->setPieces($att);
+                                break;
+                            case 'energy_rate':
+                                $annonce->setEnergie($att);
+                                break;
+                            case 'ges':
+                                $annonce->setGes($att);
+                                break;
+                            case 'lease_type':
+                                $annonce->setVente($att);
+                                break;
+                            case 'floor_number':
+                                $annonce->setEtage($att);
+                                break;
+                            case 'nb_floors_building':
+                                $annonce->setEtages($att);
+                                break;
+                            case 'nb_parkings':
+                                    $annonce->setParking($att);
+                                break;
+                            case 'charges_included':
+                                $annonce->setCharges($att);
+                                break;
+                            case 'furnished':
+                                $annonce->setMeuble($att);
+                                break;
+                            case 'custom_ref':
+                                $annonce->setReference($att);
+                                break;
+                            case 'fai_included':
+                                $annonce->setHonoraires($att);
+                                break;
+
+                        }
+                    }
+
+
+                    $annonce->setDatePublication(new \DateTime($publication_date));
+                    $annonce->setDescription($description);
+
+                    $location         = $ad->location;
+                    $region           = $location->region_name;
+                    $departement      = '';
+                    if( isset( $location->department_name ) )
+                        $departement      = $location->department_name;
+                    $ville            = $location->city;
+                    $telephone        = $ad->has_phone;
+
+                    if ( $telephone != 1 ) {
+                        $telephone = -1;
+                        $urlOffre = $annonce->getUrlOffre();//2156947292.htm
+
+                        $file = 'parses/parse'.$categoryId.'/'.$urlOffre;
+
+                        if( is_file($file)) {
+                            unlink($file);
+                            $file = explode('.', $annonce->getUrlOffre());
+                            $file = $file[0];
+                            $file = 'parses/parse'.$categoryId.'png/'.$file.'.png';
+                            if( is_file($file) )
+                                unlink($file);
+
+                            $file = 'parses/parse'.$categoryId.'pngcrop/'.$file.'.png';
+                            if( is_file($file) )
+                                unlink($file);
+
+                            $file = 'parses/parse'.$categoryId.'pngcrop/'.$file.'-b.png';
+                            if( is_file($file) )
+                                unlink($file);
+                        }
+                    }else
+                        $telephone = 1;
+
+                    $annonce->setDetails(1);
+                    $annonce->setTitre($titre);
+                    $annonce->setRegion($region);
+                    $annonce->setDepartement($departement);
+                    $annonce->setVille($ville);
+                    $annonce->setPrix($price);
+                    $annonce->setImages($images);
+                    $annonce->setTelephone($telephone);
+                    $annonce->setCreatedAt(new \DateTimeImmutable());
+                    $this->entityManager->flush();
+
+
+
+                }
+
+
+                if ($categoryId == 1) {
+
+                    $json = explode('<script id="__NEXT_DATA__" type="application/json" crossorigin="anonymous">', $response);
+                    if( !isset($json[1])) {
+                        $this->entityManager->remove($annonce);
+                        $this->entityManager->flush();
+
+                        $this->removeFile($categoryId, $annonce->getUrlOffre());
+                        continue;
+                    }
+                    $json = explode('</script>', $json[1]);
+
+                    $json = json_decode($json[0]);
+
+                    if( !isset( $json->props->pageProps->ad )) {
+
+                        $this->removeFile($categoryId, $annonce->getUrlOffre());
+                        $this->entityManager->remove($annonce);
+                        $this->entityManager->flush();
+                        continue;
+                    }
                     $ad = $json->props->pageProps->ad;
                     $publication_date = $ad->first_publication_date;
                     $titre            = $ad->subject;
@@ -337,6 +535,7 @@ class Scrapper extends Command
                     $annonce->setPrix($price);
                     $annonce->setImages($images);
                     $annonce->setTelephone($telephone);
+                    $annonce->setCreatedAt(new \DateTimeImmutable());
                     $this->entityManager->flush();
 
 
@@ -348,5 +547,27 @@ class Scrapper extends Command
 
         $io->success('urls parsées');
         return Command::SUCCESS;
+    }
+
+    public function removeFile($categoryId, $annonce){
+        $file = 'parses/parse'.$categoryId.'/'.$annonce;
+        if( is_file($file)) {
+            unlink($file);
+        }
+
+        $file = explode('.', $annonce);
+        $file = $file[0];
+        $file = 'parses/parse'.$categoryId.'png/'.$file.'.png';
+        if( is_file($file) )
+            unlink($file);
+
+        $file = 'parses/parse'.$categoryId.'pngcrop/'.$file.'.png';
+        if( is_file($file) )
+            unlink($file);
+
+        $file = 'parses/parse'.$categoryId.'pngcrop/'.$file.'-b.png';
+        if( is_file($file) )
+            unlink($file);
+
     }
 }

@@ -64,6 +64,9 @@ class SearchParse1Type extends AbstractType
     {
 
         $builder
+            ->add('avecNumeroDeTelephone', ChoiceType::class, [
+                'choices'  => [''=>'', 'Oui' => '1'],
+            ])
             ->add('region', ChoiceType::class, [
                 'placeholder' => 'label.region',
                 'choices'  => $options['region'],
@@ -146,6 +149,8 @@ class SearchParse1Type extends AbstractType
             ->add('DateDeRecuperation', DateType::class, [
                 'placeholder' => 'label.createdAt',
                 'widget' => 'single_text',
+            ])
+            ->add('titre', TextType::class, [
             ])
             ->add('prixMax', TextType::class, [
             ])
