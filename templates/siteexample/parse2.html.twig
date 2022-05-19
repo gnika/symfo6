@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %} {{ categorie.site.name }} {% endblock %}
 
-{% block h1Title %} {{ categorie.site.name }} / {{ categorie.name }} {{ 'test.h1'|trans|raw }} {% endblock %}
+{% block h1Title %} {{ categorie.site.name }} / {{ categorie.name|replace({'_': ''}) }} {{ 'test.h1'|trans|raw }} {% endblock %}
 {% block body %}
 
     <a href="{{ path('request_siteexample', { 'id': categorie.site.id })}}">{{ 'categ.retour'|trans|raw }}</a>
@@ -15,8 +15,8 @@
                     Trier par {{ knp_pagination_sortable(pagination, 'Date de publication', 'datePublication') }}<br/>
                     Trier par {{ knp_pagination_sortable(pagination, 'Date de récupération de l\'annonce', 'createdAt') }}
                 </div>
-
-
+        <br/>
+        <p>{{ 'test.nophone'|trans|raw }}</p>
 
         {# total items count #}
         <div class="count">
@@ -30,7 +30,7 @@
 
             <article class="post">
                 <h2>
-                    <a target="_blank" href="https://www.leboncoin.fr/voitures/{{ article.urlOffre }}">
+                    <a target="_blank" href="https://www.leboncoin.fr/ventes_immobilieres/{{ article.urlOffre }}">
                         {{ article.titre }}
                     </a>
                 </h2>

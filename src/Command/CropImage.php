@@ -39,9 +39,9 @@ class CropImage extends Command
     protected function configure(): void
     {
         $this
-
-            ->addOption('path', 'p',
-                InputOption::VALUE_REQUIRED, 'chemin du dossier des images', 'parse1png')
+            ->addOption('category', 'c',
+                InputOption::VALUE_REQUIRED, 'category à parser', 1)
+        ;
 
 
 
@@ -51,10 +51,10 @@ class CropImage extends Command
                                OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $path = $input->getOption('path');
+        $categoryId = $input->getOption('category');
 
 
-        $mydir = 'parses/'.$path;
+        $mydir = 'parses/parse'.$categoryId.'png';
 
 
         //$im = imagecreatefrompng($mydir."/2121226359.png");

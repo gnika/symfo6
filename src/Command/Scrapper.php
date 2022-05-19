@@ -125,48 +125,79 @@ class Scrapper extends Command
                     continue;
                 }
 
+                $response = '<div class="styles_classifiedColumn__FvVg5">' . $response[1];
+                $response = explode('<div class="styles_sideColumn__MyCwB">', $response);
+                $response = $response[0];
+
                 if( $categoryId == 1 ) {
-                    $response = '<div class="styles_classifiedColumn__FvVg5">' . $response[1];
-                    $response = explode('<div class="styles_sideColumn__MyCwB">', $response);
-                    $response = $response[0];
-                }else
-                    $response = $response[1];
 
-                $urls = explode('href="/'.$categoryName.'/', $response);
+                    $urls = explode('href="/'.$categoryName.'/', $response);
+                    //echo '<pre>';print_r($urls);die();
+                    foreach ($urls as $url) {
+                        $url = explode('"', $url);
+                        if (strpos($url[0], '.') !== false) {
 
-                foreach ($urls as $url) {
-                    $url = explode('"', $url);
-                    if (strpos($url[0], '.') !== false) {
+                            if( $categoryId == 1) {
 
-                        if( $categoryId == 1) {
+                                $parse = new Parse1();
+                                $dejaEnBase = $this->parse1Repository->findOneBy(['urlOffre' => $url[0]]);
+                            }
 
-                            $parse = new Parse1();
-                            $dejaEnBase = $this->parse1Repository->findOneBy(['urlOffre' => $url[0]]);
-                        }
-                        if( $categoryId == 2) {
+                            if ($dejaEnBase == '') {
 
-                            $parse = new Parse2();
-                            $dejaEnBase = $this->parse2Repository->findOneBy(['urlOffre' => $url[0]]);
-                        }
-
-                        if ($dejaEnBase == '') {
-
-                            $myfile = fopen("parses/parse".$categoryId."/" . $url[0], "w");
-                            fwrite($myfile, $urlSite . "/".$categoryName."/" . $url[0]);
-                            fclose($myfile);
+                                $myfile = fopen("parses/parse".$categoryId."/" . $url[0], "w");
+                                fwrite($myfile, $urlSite . "/".$categoryName."/" . $url[0]);
+                                fclose($myfile);
 
 
-                            $parse->setCategorySite($category);
-                            $parse->setDetails(0);
-                            $parse->setTitre($categoryId);//titre non permanent
-                            $parse->setCreatedAt(new \DateTimeImmutable());
-                            $parse->setUrlOffre($url[0]);
-                            $this->entityManager->persist($parse);
-                            $this->entityManager->flush();
+                                $parse->setCategorySite($category);
+                                $parse->setDetails(0);
+                                $parse->setTitre($categoryId);//titre non permanent
+                                $parse->setCreatedAt(new \DateTimeImmutable());
+                                $parse->setUrlOffre($url[0]);
+                                $this->entityManager->persist($parse);
+                                $this->entityManager->flush();
 
+
+                            }
 
                         }
+                    }
+                }
+                if( $categoryId == 2 ) {
 
+                    $urls = explode('.htm', $response);
+                    //echo '<pre>';print_r($urls);die();
+                    foreach ($urls as $url) {
+                        $url = basename($url);
+                        
+                        if( is_numeric($url)){
+                            $url = $url.'.htm';
+                            if ($categoryId == 2) {
+
+                                $parse = new Parse2();
+                                $dejaEnBase = $this->parse2Repository->findOneBy(['urlOffre' => $url]);
+                            }
+
+                            if ($dejaEnBase == '') {
+
+                                $myfile = fopen("parses/parse" . $categoryId . "/" . $url, "w");
+                                fwrite($myfile, $urlSite . "/" . $categoryName . "/" . $url);
+                                fclose($myfile);
+
+
+                                $parse->setCategorySite($category);
+                                $parse->setDetails(0);
+                                $parse->setTitre($categoryId);//titre non permanent
+                                $parse->setCreatedAt(new \DateTimeImmutable());
+                                $parse->setUrlOffre($url);
+                                $this->entityManager->persist($parse);
+                                $this->entityManager->flush();
+
+
+                            }
+
+                        }
                     }
                 }
 
@@ -184,12 +215,13 @@ class Scrapper extends Command
 
             foreach( $annonces as $annonce ) {
 
-
+// dd($annonce);
                 $urlFinal = $urlSite . '/' . $category->getName() . '/' . $annonce->getUrlOffre();
                 //A CHECKER MAIS IL SEMBLE QUE LE DATADOME SOIT PRESENT BEAUCOUP PLUS SUR L IMMOBILIER - ON FORCE
                 //DONC L'URL AUX VOITURES
                 $urlFinal = $urlSite.'/voitures/'.$annonce->getUrlOffre();
                 //$urlFinal = "https://www.leboncoin.fr/voitures/2153468090.htm";
+				// echo $urlFinal;die();
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, 'https://api.proxycrawl.com/?token=b5EzeICBK1os1ZSr_hTDAw&url=' . $urlFinal);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -234,6 +266,14 @@ class Scrapper extends Command
                     $publication_date = $ad->first_publication_date;
                     $titre            = $ad->subject;
                     $description      = $ad->body;
+                    if( !isset($ad->price[0])){
+                        $this->entityManager->remove($annonce);
+                        $this->entityManager->flush();
+
+                        $this->removeFile($categoryId, $annonce->getUrlOffre());
+                        continue;
+                    }
+
                     $price            = $ad->price[0];
                     $images           = '';
                     if( isset( $ad->images->urls )) {
@@ -325,7 +365,10 @@ class Scrapper extends Command
                     $departement      = '';
                     if( isset( $location->department_name ) )
                         $departement      = $location->department_name;
-                    $ville            = $location->city;
+                    if( isset($location->city) )
+                        $ville            = $location->city;
+                    else
+                        $ville            = '';
                     $telephone        = $ad->has_phone;
 
                     if ( $telephone != 1 ) {

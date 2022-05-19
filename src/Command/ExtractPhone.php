@@ -72,8 +72,10 @@ class ExtractPhone extends Command
                 //update
                 $ff = str_replace('-b', '', $nameFile);
                 $annonce = $this->parse1Repository->findOneBy(['urlOffre' => $ff.'.htm']);
-                $annonce->setTelephone($tel);
-                $this->entityManager->flush();
+                if( $annonce->getId() !== null ) {
+                    $annonce->setTelephone($tel);
+                    $this->entityManager->flush();
+                }
 
                 //supprime les fichiers pour eviter d'autres parsages
                 $file = 'parses/parse'.$categoryId.'/'.$nameFile.'.htm';
