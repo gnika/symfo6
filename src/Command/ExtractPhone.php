@@ -6,6 +6,7 @@ use App\Entity\Site;
 use App\Repository\CategoryRepository;
 use App\Repository\CategorySiteRepository;
 use App\Repository\Parse1Repository;
+use App\Repository\Parse2Repository;
 use App\Repository\SiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -30,12 +31,14 @@ class ExtractPhone extends Command
     public function __construct(EntityManagerInterface $entityManager,
                                 SiteRepository $siteRepository,
                                 Parse1Repository $parse1Repository,
+                                Parse2Repository $parse2Repository,
                                 CategorySiteRepository $categoryRepository)
     {
         $this->entityManager = $entityManager;
         $this->siteRepository = $siteRepository;
         $this->categoryRepository = $categoryRepository;
         $this->parse1Repository = $parse1Repository;
+        $this->parse2Repository = $parse2Repository;
         parent::__construct();
     }
     protected function configure(): void
@@ -71,8 +74,12 @@ class ExtractPhone extends Command
             if( strlen( $tel ) > 3 ){
                 //update
                 $ff = str_replace('-b', '', $nameFile);
-                $annonce = $this->parse1Repository->findOneBy(['urlOffre' => $ff.'.htm']);
-                if( $annonce->getId() !== null ) {
+                if( $categoryId == 1 )
+                    $annonce = $this->parse1Repository->findOneBy(['urlOffre' => $ff.'.htm']);
+                if( $categoryId == 2 )
+                    $annonce = $this->parse2Repository->findOneBy(['urlOffre' => $ff.'.htm']);
+
+                if( $annonce != null ) {
                     $annonce->setTelephone($tel);
                     $this->entityManager->flush();
                 }
@@ -104,6 +111,17 @@ class ExtractPhone extends Command
 
         $myfiles = array_diff(scandir($mydir), array('.', '..'));
         foreach( $myfiles as $myfile){
+
+            if( $categoryId == 1 )
+                $annonce = $this->parse1Repository->findOneBy(['urlOffre' => $myfile]);
+            if( $categoryId == 2 )
+                $annonce = $this->parse2Repository->findOneBy(['urlOffre' => $myfile]);
+            if( $annonce != null ) {
+                $annonce->setTelephone('-1');
+                $this->entityManager->flush();
+            }
+
+
             $url      = explode('.', $myfile);
             $nameFile = $url[0];
             //supprime les fichiers pour eviter d'autres parsages

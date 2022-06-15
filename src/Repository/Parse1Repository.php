@@ -291,6 +291,16 @@ class Parse1Repository extends ServiceEntityRepository
         return $result;
     }
 
+    public function findPhone()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.telephone is null')
+            ->orWhere('p.telephone = 1')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Parse1[] Returns an array of Parse1 objects
     //  */

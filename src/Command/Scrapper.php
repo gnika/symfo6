@@ -105,6 +105,83 @@ class Scrapper extends Command
         if( $modele_parse == 'liste' ) {
 
 
+            /*
+            //get list of proxy :
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0');
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+            $proxies = array();
+            $start_count = 1;
+            $end_count = 10;
+
+            for( $i = $start_count; $i <= $end_count; $i++){
+                curl_setopt($curl, CURLOPT_URL, "https://www.my-proxy.com/free-proxy-list-$i.html");
+                $result = curl_exec($curl);
+
+                preg_match_all("!\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}:\d{2,4}!", $result, $matches);
+
+                $proxies = array_merge($proxies, $matches[0]);
+
+            }
+
+            curl_close($curl);
+            print_r($proxies);
+
+            */
+
+
+                $ch = curl_init();
+                $timeout = 5; // set to zero for no timeout
+                curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+                curl_setopt ($ch, CURLOPT_URL, "https://www.google.com");
+                curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_PROXY, "172.252.1.161"); //your proxy url
+                curl_setopt($ch, CURLOPT_PROXYPORT, "3128"); // your proxy port number
+                $file_contents = curl_exec($ch);
+                curl_close($ch);
+
+
+            $url = 'http://dynupdate.no-ip.com/ip.php';
+            $proxy = '142.252.223.20';
+
+
+            $url = 'https://google.com';
+            $proxyPort = '3128';
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+//proxy suport
+            curl_setopt($ch, CURLOPT_PROXY, $proxy);
+            curl_setopt($ch, CURLOPT_PROXYPORT, $proxyPort);
+//curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
+            curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTP');
+            curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, 1);
+//https
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML,like Gecko) Chrome/27.0.1453.94 Safari/537.36");
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+
+            $output = curl_exec($ch);
+
+            if(curl_exec($ch) === false)
+            {
+                echo 'Curl error: ' . curl_error($ch);
+            }
+            else
+            {
+                echo 'Operation completed without any errors';
+            }
+
+            echo $output;
+
+            curl_close($ch);
+
+            die();
+
             for( $i = 0; $i <= 50; $i++) {
 
                 if ($category->getParseList() == 0)

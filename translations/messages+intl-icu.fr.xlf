@@ -7,6 +7,10 @@
                 <source>test.h1</source>
                 <target><![CDATA[<span class="btn btn-danger">DONNEES DE TEST</span>]]></target>
             </trans-unit>
+            <trans-unit id="test.nophone">
+                <source>test.nophone</source>
+                <target><![CDATA[<span class="btn btn-danger">Les numéros de téléphone ont volontairement été retirés des données de test</span>]]></target>
+            </trans-unit>
             <trans-unit id="label.departement">
                 <source>label.departement</source>
                 <target>Departement</target>
